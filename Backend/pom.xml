@@ -23,6 +23,7 @@
 	<modules>
 		<module>service-registry</module>
 		<module>api-gateway</module>
+		<module>grpc-common</module>
 		<module>auth-service</module>
 		<module>board-service</module>
 		<module>chat-service</module>

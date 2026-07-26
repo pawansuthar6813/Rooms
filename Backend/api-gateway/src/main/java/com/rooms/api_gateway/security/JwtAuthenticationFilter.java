@@ -32,9 +32,10 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
         ServerHttpRequest request = exchange.getRequest();
         String path = request.getURI().getPath();
 
-        // Skip auth routes and public routes
-        if (path.startsWith("/api/v1/auth/signup/email") || path.startsWith("/api/v1/auth/login") || 
-            path.startsWith("/api/v1/auth/oauth") || path.startsWith("/api/v1/auth/refresh")) {
+        // Skip auth routes, public routes, and circuit breaker fallback endpoints
+        if (path.startsWith("/api/v1/auth/signup/email") || path.startsWith("/api/v1/auth/login") ||
+            path.startsWith("/api/v1/auth/oauth") || path.startsWith("/api/v1/auth/refresh") ||
+            path.startsWith("/fallback/")) {
             return chain.filter(exchange);
         }
 

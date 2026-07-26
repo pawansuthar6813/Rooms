@@ -16,6 +16,7 @@ spring:
               - GET
               - POST
               - PUT
+              - PATCH
               - DELETE
               - OPTIONS
             allowedHeaders: "*"
@@ -31,22 +32,49 @@ spring:
           uri: lb://auth-service
           predicates:
             - Path=/api/v1/auth/**
+          # No circuit breaker on auth — login/signup are public and
+          # a slow cold-start must not trip the breaker and block users out.
+
         - id: room-service
           uri: lb://room-service
           predicates:
-            - Path=/rooms/**
+            - Path=/api/v1/rooms/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: roomServiceCircuitBreaker
+                fallbackUri: forward:/fallback/room
+
         - id: board-service
           uri: lb://board-service
           predicates:
-            - Path=/rooms/{roomId}/topics/**
+            - Path=/api/v1/rooms/{roomId}/topics/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: boardServiceCircuitBreaker
+                fallbackUri: forward:/fallback/board
+
         - id: chat-service
           uri: lb://chat-service
           predicates:
-            - Path=/chat/**
+            - Path=/api/v1/chat/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: chatServiceCircuitBreaker
+                fallbackUri: forward:/fallback/chat
+
         - id: file-service
           uri: lb://file-service
           predicates:
             - Path=/files/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: fileServiceCircuitBreaker
+                fallbackUri: forward:/fallback/file
+
         - id: websocket
           uri: lb://board-service
           predicates:
@@ -55,11 +83,15 @@ spring:
     redis:
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
-
+      password: ${REDIS_PASSWORD:}
+      # ssl: true # uncomment if required by production redis provider
+      
 server:
   port: ${SERVER_PORT:8080}
 
 eureka:
+  instance:
+    preferIpAddress: true
   client:
     serviceUrl:
       defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
@@ -67,3 +99,21 @@ eureka:
 jwt:
   access:
     secret: ${JWT_ACCESS_SECRET}
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        slidingWindowSize: 20
+        permittedNumberOfCallsInHalfOpenState: 5
+        failureRateThreshold: 60
+        waitDurationInOpenState: 30s
+        registerHealthIndicator: true
+        # Only count actual connection/IO failures as errors, not slow calls
+        slowCallRateThreshold: 100
+        slowCallDurationThreshold: 60s
+  timelimiter:
+    configs:
+      default:
+        # 30s timeout — generous for cold starts and first-request latency
+        timeoutDuration: 30s
