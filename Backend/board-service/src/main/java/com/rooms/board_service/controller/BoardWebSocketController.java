@@ -24,7 +24,7 @@ public class BoardWebSocketController {
                                   SimpMessageHeaderAccessor headerAccessor) {
         // We could extract userId from headers if we needed to validate permissions per message,
         // but typically being subscribed to the topic implies access if we verified it on subscription.
-        // For now, process the update.
+        System.out.println("Received board update for topic: " + topicId + ", payload: " + payload);
         canvasStateService.processUpdate(topicId, payload);
     }
 }

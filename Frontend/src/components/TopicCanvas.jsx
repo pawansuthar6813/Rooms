@@ -32,6 +32,8 @@ export default function TopicCanvas({ roomId, topic }) {
             const payload = JSON.parse(message.body);
             const { operation } = payload;
             
+            console.log('Received WebSocket update:', payload);
+            
             if (operation) {
               const { type, elementId, data } = operation;
               
@@ -116,6 +118,7 @@ export default function TopicCanvas({ roomId, topic }) {
 
       debounceTimerRef.current = setTimeout(() => {
         if (!stompClientRef.current || !stompClientRef.current.connected) {
+          console.warn('STOMP client not connected, discarding updates');
           pendingUpdatesRef.current = [];
           return;
         }
@@ -123,6 +126,7 @@ export default function TopicCanvas({ roomId, topic }) {
         const updatesToSend = [...pendingUpdatesRef.current];
         pendingUpdatesRef.current = [];
 
+        console.log('Publishing updates:', updatesToSend.length);
         updatesToSend.forEach(operation => {
           stompClientRef.current.publish({
             destination: `/app/board/${topic.id}/update`,
