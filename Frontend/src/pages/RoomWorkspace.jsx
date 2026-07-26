@@ -8,6 +8,8 @@ import api from '../lib/api';
 import toast from 'react-hot-toast';
 import TopicCanvas from '../components/TopicCanvas';
 import ActiveUsersBar from '../components/ActiveUsersBar';
+import ChatPanel from '../components/ChatPanel';
+import FilePanel from '../components/FilePanel';
 
 export default function RoomWorkspace() {
   const { roomId } = useParams();
@@ -19,6 +21,11 @@ export default function RoomWorkspace() {
   const [isLoading, setIsLoading] = useState(true);
   const [isCreatingTopic, setIsCreatingTopic] = useState(false);
   const [newTopicName, setNewTopicName] = useState('');
+
+  // Panel states
+  const [chatOpen, setChatOpen] = useState(false);
+  const [filesOpen, setFilesOpen] = useState(false);
+  const [activePanel, setActivePanel] = useState(null); // 'chat' or 'files'
 
   useEffect(() => {
     fetchTopics();
@@ -57,10 +64,28 @@ export default function RoomWorkspace() {
     }
   };
 
+  const toggleChat = () => {
+    if (chatOpen && activePanel === 'chat') {
+      setChatOpen(false);
+    } else {
+      setChatOpen(true);
+      setActivePanel('chat');
+    }
+  };
+
+  const toggleFiles = () => {
+    if (filesOpen && activePanel === 'files') {
+      setFilesOpen(false);
+    } else {
+      setFilesOpen(true);
+      setActivePanel('files');
+    }
+  };
+
   return (
     <div className="h-screen flex flex-col bg-slate-50 dark:bg-darkBg transition-colors duration-200 overflow-hidden">
       {/* Top Navbar */}
-      <nav className="h-14 bg-white dark:bg-darkSurface border-b border-slate-200 dark:border-darkBorder flex items-center justify-between px-4 shrink-0">
+      <nav className="h-14 bg-white dark:bg-darkSurface border-b border-slate-200 dark:border-darkBorder flex items-center justify-between px-4 shrink-0 z-10">
         <div className="flex items-center space-x-4">
           <button 
             onClick={() => navigate('/dashboard')}
@@ -133,20 +158,52 @@ export default function RoomWorkspace() {
             </div>
           )}
         </div>
+        
+        {/* Sliding Panels Overlay */}
+        <div className="absolute inset-y-0 right-0 pointer-events-none w-0 z-[9999]">
+           <ChatPanel 
+             roomId={roomId} 
+             isOpen={chatOpen} 
+             onClose={() => setChatOpen(false)} 
+             zIndex={activePanel === 'chat' ? 50 : 40}
+             onFocus={() => setActivePanel('chat')}
+           />
+           <FilePanel 
+             roomId={roomId} 
+             isOpen={filesOpen} 
+             onClose={() => setFilesOpen(false)} 
+             zIndex={activePanel === 'files' ? 50 : 40}
+             onFocus={() => setActivePanel('files')}
+           />
+        </div>
       </div>
 
       {/* Bottom Navbar (Presence & Tools) */}
-      <div className="h-12 bg-white dark:bg-darkSurface border-t border-slate-200 dark:border-darkBorder flex items-center justify-between px-4 shrink-0 z-50">
+      <div className="h-12 bg-white dark:bg-darkSurface border-t border-slate-200 dark:border-darkBorder flex items-center justify-between px-4 shrink-0 z-[60]">
         <div className="flex items-center">
           <ActiveUsersBar roomId={roomId} />
         </div>
         
         <div className="flex items-center space-x-2">
-          <button className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-darkBorder text-slate-600 dark:text-slate-400 transition-colors flex items-center gap-2">
+          <button 
+            onClick={toggleFiles}
+            className={`p-2 rounded-lg transition-colors flex items-center gap-2 ${
+              filesOpen 
+                ? 'bg-indigo-50 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400' 
+                : 'hover:bg-slate-100 dark:hover:bg-darkBorder text-slate-600 dark:text-slate-400'
+            }`}
+          >
             <Folder className="w-4 h-4" />
             <span className="text-sm font-medium">Files</span>
           </button>
-          <button className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-darkBorder text-slate-600 dark:text-slate-400 transition-colors flex items-center gap-2">
+          <button 
+            onClick={toggleChat}
+            className={`p-2 rounded-lg transition-colors flex items-center gap-2 ${
+              chatOpen 
+                ? 'bg-indigo-50 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400' 
+                : 'hover:bg-slate-100 dark:hover:bg-darkBorder text-slate-600 dark:text-slate-400'
+            }`}
+          >
             <MessageSquare className="w-4 h-4" />
             <span className="text-sm font-medium">Chat</span>
           </button>

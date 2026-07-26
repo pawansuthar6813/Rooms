@@ -16,7 +16,7 @@ export default function TopicCanvas({ roomId, topic }) {
   // Set up WebSocket connection
   useEffect(() => {
     // We connect to the gateway which handles the WebSocket upgrade
-    const socket = new SockJS('http://localhost:8080/ws');
+    const socket = new SockJS('http://localhost:8080/ws/board');
     const stompClient = new Client({
       webSocketFactory: () => socket,
       debug: (str) => {
@@ -72,21 +72,25 @@ export default function TopicCanvas({ roomId, topic }) {
   const handleMount = useCallback((mountedEditor) => {
     setEditor(mountedEditor);
     
-    // Load initial state from the topic object
-    if (topic.canvasState && Object.keys(topic.canvasState).length > 0) {
+    const fetchLatestState = async () => {
       try {
-        const records = Object.values(topic.canvasState);
-        if (records.length > 0) {
-          mountedEditor.store.mergeRemoteChanges(() => {
-            mountedEditor.store.put(records);
-          });
+        const response = await api.get(`/rooms/${roomId}/topics/${topic.id}`);
+        const latestTopic = response.data.data;
+        if (latestTopic.canvasState && Object.keys(latestTopic.canvasState).length > 0) {
+          const records = Object.values(latestTopic.canvasState);
+          if (records.length > 0) {
+            mountedEditor.store.mergeRemoteChanges(() => {
+              mountedEditor.store.put(records);
+            });
+          }
         }
       } catch (err) {
-        console.error('Failed to load initial canvas state', err);
+        console.error('Failed to fetch latest canvas state', err);
         toast.error('Failed to load canvas state');
       }
-    }
-  }, [topic]);
+    };
+    fetchLatestState();
+  }, [roomId, topic.id]);
 
   // Listen to local Tldraw changes and sync them
   useEffect(() => {
