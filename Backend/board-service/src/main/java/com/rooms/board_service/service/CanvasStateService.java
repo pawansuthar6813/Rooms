@@ -72,6 +72,10 @@ public class CanvasStateService {
                 .orElse(new ConcurrentHashMap<>());
     }
 
+    public Map<String, Object> getLatestState(String topicId) {
+        return topicStates.get(topicId);
+    }
+
     @Scheduled(fixedDelayString = "${CANVAS_FLUSH_INTERVAL_MS:5000}")
     public void flushDirtyStatesToDb() {
         if (dirtyTopics.isEmpty()) {

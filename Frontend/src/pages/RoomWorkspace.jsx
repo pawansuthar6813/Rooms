@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
-import { ArrowLeft, Moon, Sun, Plus, MoreVertical, MessageSquare, Folder } from 'lucide-react';
+import { ArrowLeft, Moon, Sun, Plus, MoreVertical, MessageSquare, Folder, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../lib/api';
 import toast from 'react-hot-toast';
@@ -16,6 +16,8 @@ export default function RoomWorkspace() {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
   
+  const { user } = useAuth();
+  const [room, setRoom] = useState(null);
   const [topics, setTopics] = useState([]);
   const [activeTopic, setActiveTopic] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -28,8 +30,18 @@ export default function RoomWorkspace() {
   const [activePanel, setActivePanel] = useState(null); // 'chat' or 'files'
 
   useEffect(() => {
+    fetchRoom();
     fetchTopics();
   }, [roomId]);
+
+  const fetchRoom = async () => {
+    try {
+      const response = await api.get(`/rooms/${roomId}`);
+      setRoom(response.data.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const fetchTopics = async () => {
     try {
@@ -61,6 +73,21 @@ export default function RoomWorkspace() {
       toast.success('Topic created');
     } catch (err) {
       toast.error('Failed to create topic');
+    }
+  };
+
+  const handleDeleteTopic = async (topicId) => {
+    if (!window.confirm('Are you sure you want to delete this topic? All drawings will be lost.')) return;
+    
+    try {
+      await api.delete(`/rooms/${roomId}/topics/${topicId}`);
+      setTopics(topics.filter(t => t.id !== topicId));
+      if (activeTopic?.id === topicId) {
+        setActiveTopic(topics.find(t => t.id !== topicId) || null);
+      }
+      toast.success('Topic deleted');
+    } catch (err) {
+      toast.error('Failed to delete topic');
     }
   };
 
@@ -99,17 +126,27 @@ export default function RoomWorkspace() {
           {/* Topic Tabs */}
           <div className="flex items-center space-x-1 overflow-x-auto no-scrollbar">
             {topics.map(topic => (
-              <button
+              <div 
                 key={topic.id}
-                onClick={() => setActiveTopic(topic)}
-                className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors whitespace-nowrap ${
+                className={`group flex items-center px-4 py-1.5 rounded-md text-sm font-medium transition-colors whitespace-nowrap ${
                   activeTopic?.id === topic.id
                     ? 'bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400'
                     : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-darkBorder/50'
                 }`}
               >
-                {topic.name}
-              </button>
+                <button onClick={() => setActiveTopic(topic)}>
+                  {topic.name}
+                </button>
+                {room?.ownerId === user?.id && (
+                  <button 
+                    onClick={() => handleDeleteTopic(topic.id)}
+                    className="ml-2 -mr-2 text-slate-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
+                    title="Delete Topic"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
             ))}
             
             {isCreatingTopic ? (

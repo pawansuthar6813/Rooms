@@ -69,17 +69,22 @@ spring:
         - id: file-service
           uri: lb://file-service
           predicates:
-            - Path=/files/**
+            - Path=/api/v1/files/**
           filters:
             - name: CircuitBreaker
               args:
                 name: fileServiceCircuitBreaker
                 fallbackUri: forward:/fallback/file
 
-        - id: websocket
+        - id: board-websocket
           uri: lb://board-service
           predicates:
-            - Path=/ws/**
+            - Path=/ws/board/**
+
+        - id: chat-websocket
+          uri: lb://chat-service
+          predicates:
+            - Path=/ws/chat/**
   data:
     redis:
       host: ${REDIS_HOST:localhost}

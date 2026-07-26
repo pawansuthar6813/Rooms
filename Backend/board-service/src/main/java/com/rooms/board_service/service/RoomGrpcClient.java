@@ -32,4 +32,21 @@ public class RoomGrpcClient {
             return false;
         }
     }
+
+    public boolean isUserOwnerOfRoom(UUID roomId, UUID userId) {
+        RoomIdRequest request = RoomIdRequest.newBuilder()
+                .setRoomId(roomId.toString())
+                .build();
+        
+        try {
+            MemberList memberList = roomServiceStub.getRoomMembers(request);
+            List<MemberInfo> members = memberList.getMembersList();
+            
+            return members.stream()
+                    .anyMatch(member -> member.getUserId().equals(userId.toString()) && "OWNER".equals(member.getRole()));
+        } catch (Exception e) {
+            // Log error
+            return false;
+        }
+    }
 }
