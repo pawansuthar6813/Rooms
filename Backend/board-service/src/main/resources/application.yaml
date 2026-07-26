@@ -1,3 +1,29 @@
 spring:
   application:
     name: board-service
+  config:
+    import: optional:file:.env[.properties]
+  profiles:
+    active: ${ENVIRONMENT:dev}
+  data:
+    mongodb:
+      uri: ${MONGO_URI}
+  threads:
+    virtual:
+      enabled: true
+
+server:
+  port: ${SERVER_PORT:8083}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI}
+  instance:
+    preferIpAddress: true
+
+grpc:
+  client:
+    room-service:
+      address: static://${ROOM_SERVICE_GRPC_HOST:127.0.0.1}:${ROOM_SERVICE_GRPC_PORT:9082}
+      negotiation-type: plaintext

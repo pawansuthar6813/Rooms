@@ -35,16 +35,6 @@ spring:
           # No circuit breaker on auth — login/signup are public and
           # a slow cold-start must not trip the breaker and block users out.
 
-        - id: room-service
-          uri: lb://room-service
-          predicates:
-            - Path=/api/v1/rooms/**
-          filters:
-            - name: CircuitBreaker
-              args:
-                name: roomServiceCircuitBreaker
-                fallbackUri: forward:/fallback/room
-
         - id: board-service
           uri: lb://board-service
           predicates:
@@ -54,6 +44,16 @@ spring:
               args:
                 name: boardServiceCircuitBreaker
                 fallbackUri: forward:/fallback/board
+
+        - id: room-service
+          uri: lb://room-service
+          predicates:
+            - Path=/api/v1/rooms/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: roomServiceCircuitBreaker
+                fallbackUri: forward:/fallback/room
 
         - id: chat-service
           uri: lb://chat-service

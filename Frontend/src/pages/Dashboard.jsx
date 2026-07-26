@@ -9,7 +9,10 @@ import { CreateRoomModal } from '../components/CreateRoomModal';
 import { RoomDetailPanel } from '../components/RoomDetailPanel';
 import toast from 'react-hot-toast';
 
+import { useNavigate } from 'react-router-dom';
+
 export default function Dashboard() {
+  const navigate = useNavigate();
   const { user, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const { rooms, invites, isLoading, fetchRooms, joinRoom } = useRoom();
@@ -126,7 +129,7 @@ export default function Dashboard() {
               <RoomCard 
                 key={room.id} 
                 room={room} 
-                onClick={(r) => console.log('Navigate to room:', r.id)}
+                onClick={(r) => navigate(`/rooms/${r.id}`)}
                 onSettingsClick={(r) => setSelectedRoom(r)}
               />
             ))}

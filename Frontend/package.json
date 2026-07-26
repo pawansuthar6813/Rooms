@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@react-oauth/google": "^0.13.5",
+    "@stomp/stompjs": "^7.3.0",
     "axios": "^1.18.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.42.2",
@@ -19,7 +20,9 @@
     "react-dom": "^19.2.7",
     "react-hot-toast": "^2.6.0",
     "react-router-dom": "^7.18.1",
-    "tailwind-merge": "^3.6.0"
+    "sockjs-client": "^1.6.1",
+    "tailwind-merge": "^3.6.0",
+    "tldraw": "^5.1.1"
   },
   "devDependencies": {
     "@types/react": "^19.2.17",

@@ -14,6 +14,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import JoinRoom from './pages/JoinRoom';
+import RoomWorkspace from './pages/RoomWorkspace';
 
 function App() {
   return (
@@ -33,6 +34,14 @@ function App() {
                   element={
                     <ProtectedRoute>
                       <Dashboard />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/rooms/:roomId" 
+                  element={
+                    <ProtectedRoute>
+                      <RoomWorkspace />
                     </ProtectedRoute>
                   } 
                 />
