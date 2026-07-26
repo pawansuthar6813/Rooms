@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: auth-service
+  config:
+    import: optional:file:.env[.properties]
+  profiles:
+    active: ${ENVIRONMENT:dev}
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope: email, profile
+
+server:
+  port: ${SERVER_PORT:8081}
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+
+grpc:
+  server:
+    port: 9081
+
+jwt:
+  access:
+    secret: ${JWT_ACCESS_SECRET}
+    expiration-ms: ${JWT_ACCESS_EXPIRY_MS:900000}
+  refresh:
+    secret: ${JWT_REFRESH_SECRET}
+    expiration-ms: ${JWT_REFRESH_EXPIRY_MS:604800000}
+
+app:
+  password:
+    pepper: ${PASSWORD_PEPPER}

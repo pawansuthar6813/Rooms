@@ -1,0 +1,11 @@
+# Project specific files
+docs/
+Rooms_Implementation_Plan.md
+
+payload.json
+test_api.ps1
+test_api.py
+
+# Ignore environment variables globally across all services
+**/.env
+.env
