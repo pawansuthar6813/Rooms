@@ -157,10 +157,10 @@ export default function ChatPanel({ roomId, isOpen, onClose, zIndex, onFocus }) 
           transition={{ type: 'spring', damping: 25, stiffness: 200 }}
           style={{ zIndex }}
           onPointerDown={onFocus}
-          className="absolute top-4 bottom-16 right-4 w-80 bg-white dark:bg-darkSurface border border-slate-200 dark:border-darkBorder rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.4)] flex flex-col overflow-hidden pointer-events-auto"
+          className="absolute top-4 bottom-16 right-4 w-80 bg-white dark:bg-darkCard border border-slate-200 dark:border-darkBorder rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.4)] flex flex-col overflow-hidden pointer-events-auto"
         >
           {/* Header */}
-          <div className="h-12 border-b border-slate-200 dark:border-darkBorder flex items-center justify-between px-4 shrink-0 bg-slate-50 dark:bg-darkSurface cursor-default">
+          <div className="h-12 border-b border-slate-200 dark:border-darkBorder flex items-center justify-between px-4 shrink-0 bg-slate-50 dark:bg-darkCard cursor-default">
             <h3 className="font-semibold text-slate-800 dark:text-slate-200">Room Chat</h3>
             <button onClick={onClose} className="p-1 rounded-md hover:bg-slate-200 dark:hover:bg-darkBorder text-slate-500 transition-colors">
               <X className="w-4 h-4" />
@@ -168,10 +168,10 @@ export default function ChatPanel({ roomId, isOpen, onClose, zIndex, onFocus }) 
           </div>
 
           {/* Messages Area */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50/50 dark:bg-darkBg/50">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50/50 dark:bg-darkBg">
             {isLoading ? (
               <div className="flex justify-center items-center h-full">
-                <Loader2 className="w-6 h-6 animate-spin text-indigo-500" />
+                <Loader2 className="w-6 h-6 animate-spin text-indigo-500 dark:text-accentGold" />
               </div>
             ) : (
               messages.map((msg, i) => {
@@ -185,7 +185,7 @@ export default function ChatPanel({ roomId, isOpen, onClose, zIndex, onFocus }) 
                     
                     <div className={`px-3 py-2 rounded-2xl max-w-[85%] text-sm ${
                       isMe 
-                        ? 'bg-indigo-600 text-white rounded-br-sm' 
+                        ? 'bg-indigo-600 dark:bg-accentGold text-white dark:text-slate-900 rounded-br-sm shadow-sm' 
                         : 'bg-white dark:bg-darkSurface border border-slate-200 dark:border-darkBorder text-slate-800 dark:text-slate-200 rounded-bl-sm shadow-sm'
                     }`}>
                       {msg.type === 'FILE_REF' ? (
@@ -207,24 +207,24 @@ export default function ChatPanel({ roomId, isOpen, onClose, zIndex, onFocus }) 
           </div>
 
           {/* Typing Indicator */}
-          <div className="px-4 py-1 h-6 text-[11px] text-slate-500 italic bg-white dark:bg-darkSurface border-t border-slate-100 dark:border-darkBorder/50">
+          <div className="px-4 py-1 h-6 text-[11px] text-slate-500 italic bg-white dark:bg-darkCard border-t border-slate-100 dark:border-darkBorder/50">
             {typingText}
           </div>
 
           {/* Input Area */}
-          <div className="p-3 bg-white dark:bg-darkSurface border-t border-slate-200 dark:border-darkBorder">
+          <div className="p-3 bg-white dark:bg-darkCard border-t border-slate-200 dark:border-darkBorder">
             <form onSubmit={handleSend} className="flex gap-2">
               <input
                 type="text"
                 value={inputValue}
                 onChange={handleInputChange}
                 placeholder="Type a message..."
-                className="flex-1 bg-slate-100 dark:bg-darkBg border-none rounded-full px-4 py-2 text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="flex-1 bg-slate-100 dark:bg-darkSurface border border-transparent dark:border-darkBorder rounded-full px-4 py-2 text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 dark:focus:ring-accentGold outline-none"
               />
               <button 
                 type="submit"
                 disabled={!inputValue.trim()}
-                className="p-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="p-2 bg-indigo-600 dark:bg-accentGold text-white dark:text-slate-900 rounded-full hover:bg-indigo-700 dark:hover:bg-accentGoldHover disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 <Send className="w-4 h-4" />
               </button>

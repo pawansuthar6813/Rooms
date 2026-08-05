@@ -71,7 +71,7 @@ export default function Signup() {
       <div className="flex-1 flex flex-col justify-center px-4 sm:px-6 lg:px-20 xl:px-24">
         <div className="mx-auto w-full max-w-sm lg:w-96">
           <Link to="/" className="flex items-center space-x-2 mb-8">
-            <Monitor className="w-8 h-8 text-blue-600 dark:text-blue-500" />
+            <Monitor className="w-8 h-8 text-blue-600 dark:text-accentGold" />
             <span className="text-2xl font-bold text-slate-900 dark:text-slate-100">Rooms</span>
           </Link>
 
@@ -87,7 +87,7 @@ export default function Signup() {
                 <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white">Create an account</h2>
                 <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
                   Already have an account?{' '}
-                  <Link to="/login" className="font-medium text-blue-600 dark:text-blue-400 hover:underline">
+                  <Link to="/login" className="font-medium text-blue-600 dark:text-accentGold hover:underline">
                     Log in
                   </Link>
                 </p>
@@ -107,7 +107,7 @@ export default function Signup() {
                         required
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="mt-1 block w-full px-4 py-3 bg-white dark:bg-darkSurface border border-slate-300 dark:border-darkBorder rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-white transition-colors"
+                        className="mt-1 block w-full px-4 py-3 bg-white dark:bg-darkSurface border border-slate-300 dark:border-transparent rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-accentGold dark:text-white transition-colors"
                         placeholder="you@example.com"
                       />
                     </div>
@@ -120,14 +120,14 @@ export default function Signup() {
                         minLength={8}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="mt-1 block w-full px-4 py-3 bg-white dark:bg-darkSurface border border-slate-300 dark:border-darkBorder rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-white transition-colors"
+                        className="mt-1 block w-full px-4 py-3 bg-white dark:bg-darkSurface border border-slate-300 dark:border-transparent rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-accentGold dark:text-white transition-colors"
                       />
                     </div>
 
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full flex justify-center items-center px-4 py-3 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 transition-colors"
+                      className="w-full flex justify-center items-center px-4 py-3 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 dark:bg-darkCard dark:hover:bg-darkBorder dark:text-slate-200 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accentGold disabled:opacity-50 transition-colors"
                     >
                       {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Continue'}
                     </button>
@@ -202,14 +202,14 @@ export default function Signup() {
                         required
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        className="mt-1 block w-full px-4 py-3 bg-white dark:bg-darkSurface border border-slate-300 dark:border-darkBorder rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-white transition-colors"
+                        className="mt-1 block w-full px-4 py-3 bg-white dark:bg-darkSurface border border-slate-300 dark:border-transparent rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-accentGold dark:text-white transition-colors"
                         placeholder="e.g. johndoe"
                       />
                     </div>
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full flex justify-center items-center px-4 py-3 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 transition-colors"
+                      className="w-full flex justify-center items-center px-4 py-3 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 dark:bg-darkCard dark:hover:bg-darkBorder dark:text-slate-200 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accentGold disabled:opacity-50 transition-colors"
                     >
                       {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Complete Setup'}
                     </button>
@@ -222,7 +222,7 @@ export default function Signup() {
       </div>
       
       {/* Decorative background */}
-      <div className="hidden lg:block relative w-0 flex-1 bg-slate-200 dark:bg-[#151515]">
+      <div className="hidden lg:block relative w-0 flex-1 bg-slate-200 dark:bg-darkSurface">
         <div className="absolute inset-0 flex items-center justify-center">
            <Monitor className="w-64 h-64 text-slate-300 dark:text-darkBorder" />
         </div>

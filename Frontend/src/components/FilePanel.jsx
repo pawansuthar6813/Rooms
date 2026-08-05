@@ -102,10 +102,10 @@ export default function FilePanel({ roomId, isOpen, onClose, zIndex, onFocus }) 
           transition={{ type: 'spring', damping: 25, stiffness: 200 }}
           style={{ zIndex }}
           onPointerDown={onFocus}
-          className="absolute top-4 bottom-16 right-4 w-80 bg-white dark:bg-darkSurface border border-slate-200 dark:border-darkBorder rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.4)] flex flex-col overflow-hidden pointer-events-auto"
+          className="absolute top-4 bottom-16 right-4 w-80 bg-white dark:bg-darkCard border border-slate-200 dark:border-darkBorder rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.4)] flex flex-col overflow-hidden pointer-events-auto"
         >
           {/* Header */}
-          <div className="h-12 border-b border-slate-200 dark:border-darkBorder flex items-center justify-between px-4 shrink-0 bg-slate-50 dark:bg-darkSurface cursor-default">
+          <div className="h-12 border-b border-slate-200 dark:border-darkBorder flex items-center justify-between px-4 shrink-0 bg-slate-50 dark:bg-darkCard cursor-default">
             <h3 className="font-semibold text-slate-800 dark:text-slate-200">Room Files</h3>
             <button onClick={onClose} className="p-1 rounded-md hover:bg-slate-200 dark:hover:bg-darkBorder text-slate-500 transition-colors">
               <X className="w-4 h-4" />
@@ -113,7 +113,7 @@ export default function FilePanel({ roomId, isOpen, onClose, zIndex, onFocus }) 
           </div>
 
           {/* Upload Zone */}
-          <div className="p-4 border-b border-slate-200 dark:border-darkBorder bg-slate-50/50 dark:bg-darkBg/50">
+          <div className="p-4 border-b border-slate-200 dark:border-darkBorder bg-slate-50/50 dark:bg-darkBg">
             <input
               type="file"
               ref={fileInputRef}
@@ -124,17 +124,17 @@ export default function FilePanel({ roomId, isOpen, onClose, zIndex, onFocus }) 
               onClick={() => !isUploading && fileInputRef.current?.click()}
               className={`border-2 border-dashed rounded-lg p-4 flex flex-col items-center justify-center text-center cursor-pointer transition-colors ${
                 isUploading 
-                  ? 'border-indigo-300 bg-indigo-50 dark:border-indigo-500/30 dark:bg-indigo-500/10' 
-                  : 'border-slate-300 dark:border-darkBorder hover:border-indigo-400 dark:hover:border-indigo-500 hover:bg-slate-50 dark:hover:bg-darkBorder/50'
+                  ? 'border-indigo-300 bg-indigo-50 dark:border-accentGold/50 dark:bg-accentGold/10' 
+                  : 'border-slate-300 dark:border-darkBorder hover:border-indigo-400 dark:hover:border-accentGold/50 hover:bg-slate-50 dark:hover:bg-darkBorder/50'
               }`}
             >
               {isUploading ? (
                 <>
-                  <Loader2 className="w-6 h-6 text-indigo-500 animate-spin mb-2" />
+                  <Loader2 className="w-6 h-6 text-indigo-500 dark:text-accentGold animate-spin mb-2" />
                   <span className="text-sm font-medium text-slate-700 dark:text-slate-300">Uploading... {uploadProgress}%</span>
                   <div className="w-full h-1.5 bg-slate-200 dark:bg-darkBorder rounded-full mt-2 overflow-hidden">
                     <div 
-                      className="h-full bg-indigo-500 transition-all duration-300" 
+                      className="h-full bg-indigo-500 dark:bg-accentGold transition-all duration-300" 
                       style={{ width: `${uploadProgress}%` }}
                     />
                   </div>
@@ -150,10 +150,10 @@ export default function FilePanel({ roomId, isOpen, onClose, zIndex, onFocus }) 
           </div>
 
           {/* Files List */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-white dark:bg-darkSurface">
+          <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-white dark:bg-darkCard">
             {isLoading ? (
               <div className="flex justify-center items-center h-20">
-                <Loader2 className="w-6 h-6 animate-spin text-indigo-500" />
+                <Loader2 className="w-6 h-6 animate-spin text-indigo-500 dark:text-accentGold" />
               </div>
             ) : files.length === 0 ? (
               <div className="text-center text-slate-500 dark:text-slate-400 text-sm mt-4">
@@ -162,7 +162,7 @@ export default function FilePanel({ roomId, isOpen, onClose, zIndex, onFocus }) 
             ) : (
               files.map(file => (
                 <div key={file.id} className="flex items-start gap-3 p-3 rounded-lg border border-slate-100 dark:border-darkBorder/50 hover:bg-slate-50 dark:hover:bg-darkBorder/30 transition-colors group">
-                  <div className="p-2 bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 rounded-md shrink-0">
+                  <div className="p-2 bg-indigo-100 dark:bg-darkBorder text-indigo-600 dark:text-accentGold rounded-md shrink-0">
                     <FileIcon className="w-5 h-5" />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -180,7 +180,7 @@ export default function FilePanel({ roomId, isOpen, onClose, zIndex, onFocus }) 
                       href={file.cloudinarySecureUrl} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="p-1.5 text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 rounded-md transition-colors"
+                      className="p-1.5 text-slate-500 hover:text-indigo-600 dark:hover:text-accentGold hover:bg-indigo-50 dark:hover:bg-darkBorder rounded-md transition-colors"
                       title="Download/Open"
                     >
                       <Download className="w-4 h-4" />
@@ -188,7 +188,7 @@ export default function FilePanel({ roomId, isOpen, onClose, zIndex, onFocus }) 
                     {file.uploadedBy === user.id && (
                       <button 
                         onClick={() => handleDelete(file.id)}
-                        className="p-1.5 text-slate-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-md transition-colors"
+                        className="p-1.5 text-slate-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-darkBorder rounded-md transition-colors"
                         title="Delete"
                       >
                         <Trash2 className="w-4 h-4" />

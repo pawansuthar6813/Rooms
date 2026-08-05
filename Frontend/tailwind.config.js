@@ -8,9 +8,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        darkBg: '#121212',
-        darkSurface: '#1E1E1E',
-        darkBorder: '#333333'
+        darkBg: '#090a0f', // Very dark background (login/sidebar)
+        darkSurface: '#12141c', // Main dashboard/app area
+        darkCard: '#1b1e27', // Elevated cards/panels
+        darkBorder: '#272b36', // Subtle borders
+        accentGold: '#e3b341', // Gold accent
+        accentGoldHover: '#cf9e2f',
       }
     },
   },

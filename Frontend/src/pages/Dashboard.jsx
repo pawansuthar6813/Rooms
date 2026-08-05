@@ -43,7 +43,7 @@ export default function Dashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center space-x-3">
-              <Monitor className="w-7 h-7 text-indigo-600 dark:text-indigo-500" />
+              <Monitor className="w-7 h-7 text-indigo-600 dark:text-accentGold" />
               <span className="text-xl font-bold text-slate-900 dark:text-slate-100">Rooms</span>
             </div>
             
@@ -82,7 +82,7 @@ export default function Dashboard() {
           <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Your Rooms</h1>
           <button 
             onClick={() => setIsCreateModalOpen(true)}
-            className="flex items-center space-x-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm"
+            className="flex items-center space-x-2 bg-indigo-600 dark:bg-accentGold hover:bg-indigo-700 dark:hover:bg-accentGoldHover text-white dark:text-slate-900 px-4 py-2 rounded-lg font-medium transition-colors shadow-sm"
           >
             <Plus className="w-5 h-5" />
             <span>Create Room</span>
@@ -95,21 +95,21 @@ export default function Dashboard() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-8"
           >
-            <h2 className="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
-              <Mail className="w-5 h-5 text-indigo-500" />
+            <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-4 flex items-center gap-2">
+              <Mail className="w-5 h-5 text-indigo-500 dark:text-accentGold" />
               Pending Invites
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {invites.map(invite => (
-                <div key={invite.token} className="bg-white border border-indigo-100 rounded-xl p-4 shadow-sm flex flex-col justify-between">
+                <div key={invite.token} className="bg-white dark:bg-darkCard border border-indigo-100 dark:border-darkBorder rounded-xl p-4 shadow-sm flex flex-col justify-between">
                   <div>
-                    <h3 className="font-semibold text-slate-800">{invite.roomName}</h3>
-                    <p className="text-sm text-slate-500 mt-1">Expires: {new Date(invite.expiresAt).toLocaleDateString()}</p>
+                    <h3 className="font-semibold text-slate-800 dark:text-slate-200">{invite.roomName}</h3>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Expires: {new Date(invite.expiresAt).toLocaleDateString()}</p>
                   </div>
                   <button
                     onClick={() => handleAcceptInvite(invite.token)}
                     disabled={isJoining}
-                    className="mt-4 w-full bg-indigo-50 text-indigo-700 hover:bg-indigo-100 py-2 rounded-lg text-sm font-medium transition-colors"
+                    className="mt-4 w-full bg-indigo-50 dark:bg-darkBorder text-indigo-700 dark:text-accentGold hover:bg-indigo-100 dark:hover:bg-slate-700 py-2 rounded-lg text-sm font-medium transition-colors"
                   >
                     Accept Invite
                   </button>
@@ -121,7 +121,7 @@ export default function Dashboard() {
 
         {isLoading ? (
           <div className="flex justify-center items-center py-20">
-            <Loader2 className="w-8 h-8 text-indigo-600 animate-spin" />
+            <Loader2 className="w-8 h-8 text-indigo-600 dark:text-accentGold animate-spin" />
           </div>
         ) : rooms.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -141,8 +141,8 @@ export default function Dashboard() {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="bg-white dark:bg-darkSurface border border-slate-200 dark:border-darkBorder border-dashed rounded-2xl p-12 text-center"
           >
-            <div className="w-16 h-16 bg-indigo-50 dark:bg-indigo-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Monitor className="w-8 h-8 text-indigo-600 dark:text-indigo-500" />
+            <div className="w-16 h-16 bg-indigo-50 dark:bg-darkBg rounded-full flex items-center justify-center mx-auto mb-4">
+              <Monitor className="w-8 h-8 text-indigo-600 dark:text-accentGold" />
             </div>
             <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">No rooms yet</h3>
             <p className="text-slate-500 dark:text-slate-400 max-w-md mx-auto mb-6">
@@ -150,7 +150,7 @@ export default function Dashboard() {
             </p>
             <button 
               onClick={() => setIsCreateModalOpen(true)}
-              className="bg-white dark:bg-darkBg text-indigo-600 dark:text-indigo-400 border border-slate-200 dark:border-darkBorder hover:bg-slate-50 dark:hover:bg-darkBorder/50 px-6 py-2.5 rounded-lg font-medium transition-colors"
+              className="bg-white dark:bg-darkBg text-indigo-600 dark:text-accentGold border border-slate-200 dark:border-darkBorder hover:bg-slate-50 dark:hover:bg-darkBorder/50 px-6 py-2.5 rounded-lg font-medium transition-colors"
             >
               Create your first room
             </button>

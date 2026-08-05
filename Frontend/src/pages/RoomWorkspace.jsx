@@ -130,8 +130,8 @@ export default function RoomWorkspace() {
                 key={topic.id}
                 className={`group flex items-center px-4 py-1.5 rounded-md text-sm font-medium transition-colors whitespace-nowrap ${
                   activeTopic?.id === topic.id
-                    ? 'bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400'
-                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-darkBorder/50'
+                    ? 'bg-indigo-50 dark:bg-darkCard text-indigo-600 dark:text-accentGold'
+                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-darkBorder'
                 }`}
               >
                 <button onClick={() => setActiveTopic(topic)}>
@@ -158,7 +158,7 @@ export default function RoomWorkspace() {
                   onChange={(e) => setNewTopicName(e.target.value)}
                   onBlur={() => setIsCreatingTopic(false)}
                   placeholder="New topic..."
-                  className="px-3 py-1 text-sm border border-indigo-300 dark:border-indigo-500 rounded-md bg-white dark:bg-darkBg text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-indigo-500/50 w-32"
+                  className="px-3 py-1 text-sm border border-indigo-300 dark:border-accentGold rounded-md bg-white dark:bg-darkBg text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-indigo-500/50 dark:focus:ring-accentGold/50 w-32"
                 />
               </form>
             ) : (
@@ -185,7 +185,7 @@ export default function RoomWorkspace() {
 
       {/* Main Workspace */}
       <div className="flex-1 flex overflow-hidden relative">
-        <div className="flex-1 relative bg-[#fafafa] dark:bg-[#121212]">
+        <div className="flex-1 relative bg-[#fafafa] dark:bg-darkSurface">
           {/* Tldraw Canvas */}
           {activeTopic ? (
             <TopicCanvas key={activeTopic.id} roomId={roomId} topic={activeTopic} />
@@ -226,8 +226,8 @@ export default function RoomWorkspace() {
             onClick={toggleFiles}
             className={`p-2 rounded-lg transition-colors flex items-center gap-2 ${
               filesOpen 
-                ? 'bg-indigo-50 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400' 
-                : 'hover:bg-slate-100 dark:hover:bg-darkBorder text-slate-600 dark:text-slate-400'
+                ? 'bg-indigo-50 dark:bg-darkCard text-indigo-600 dark:text-accentGold shadow-sm border border-transparent dark:border-darkBorder' 
+                : 'hover:bg-slate-100 dark:hover:bg-darkBorder text-slate-600 dark:text-slate-400 border border-transparent'
             }`}
           >
             <Folder className="w-4 h-4" />
@@ -237,8 +237,8 @@ export default function RoomWorkspace() {
             onClick={toggleChat}
             className={`p-2 rounded-lg transition-colors flex items-center gap-2 ${
               chatOpen 
-                ? 'bg-indigo-50 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400' 
-                : 'hover:bg-slate-100 dark:hover:bg-darkBorder text-slate-600 dark:text-slate-400'
+                ? 'bg-indigo-50 dark:bg-darkCard text-indigo-600 dark:text-accentGold shadow-sm border border-transparent dark:border-darkBorder' 
+                : 'hover:bg-slate-100 dark:hover:bg-darkBorder text-slate-600 dark:text-slate-400 border border-transparent'
             }`}
           >
             <MessageSquare className="w-4 h-4" />
