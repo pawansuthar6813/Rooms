@@ -3,12 +3,8 @@ FROM maven:3.9.6-eclipse-temurin-21-alpine AS builder
 
 WORKDIR /app
 
-# Copy the parent pom
-COPY pom.xml .
-
-# Copy the specific module pom and source code
-COPY service-registry/pom.xml service-registry/
-COPY service-registry/src service-registry/src
+# Copy the entire backend source code
+COPY . .
 
 # Package the service-registry module
 # We run this from the root directory so it can resolve the parent POM

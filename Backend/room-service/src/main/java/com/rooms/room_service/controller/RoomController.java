@@ -5,6 +5,7 @@ import com.rooms.room_service.dto.CreateRoomRequest;
 import com.rooms.room_service.dto.RoomDto;
 import com.rooms.room_service.entity.MemberRole;
 import com.rooms.room_service.service.RoomService;
+import com.rooms.room_service.dto.PendingInviteDto;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,8 +39,8 @@ public class RoomController {
     }
 
     @GetMapping("/invites")
-    public ResponseEntity<ApiResponse<List<com.rooms.room_service.dto.PendingInviteDto>>> getPendingInvites(@RequestHeader("X-User-Id") UUID userId) {
-        List<com.rooms.room_service.dto.PendingInviteDto> invites = roomService.getPendingInvites(userId);
+    public ResponseEntity<ApiResponse<List<PendingInviteDto>>> getPendingInvites(@RequestHeader("X-User-Id") UUID userId) {
+        List<PendingInviteDto> invites = roomService.getPendingInvites(userId);
         return ResponseEntity.ok(new ApiResponse<>(true, HttpStatus.OK.value(), invites, "Invites fetched successfully"));
     }
 

@@ -1,6 +1,7 @@
 package com.rooms.room_service.service;
 
 import com.rooms.grpc.auth.UserInfo;
+import com.rooms.room_service.dto.PendingInviteDto;
 import com.rooms.room_service.dto.CreateRoomRequest;
 import com.rooms.room_service.dto.RoomDto;
 import com.rooms.room_service.dto.RoomMemberDto;
@@ -202,7 +203,7 @@ public class RoomService {
         roomMemberRepository.save(member);
     }
 
-    public List<com.rooms.room_service.dto.PendingInviteDto> getPendingInvites(UUID userId) {
+    public List<PendingInviteDto> getPendingInvites(UUID userId) {
         String email = "";
         try {
             UserInfo userInfo = authGrpcClient.getUserById(userId);
